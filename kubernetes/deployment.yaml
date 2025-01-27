@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: django-container
-        image: gcr.io/wp-k8s-project/django-helloworld:latest  # Will be updated with GitHub SHA
+        image: gcr.io/gcp-docker-cicd/django-helloworld:latest  # Will be updated with GitHub SHA
         ports:
         - containerPort: 8000
       imagePullSecrets:

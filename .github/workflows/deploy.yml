@@ -30,18 +30,18 @@ jobs:
     # Build the Docker image
     - name: Build Docker image
       run: |
-        docker build -t gcr.io/wp-k8s-project/django-helloworld:$GITHUB_SHA .
-        docker push gcr.io/wp-k8s-project/django-helloworld:$GITHUB_SHA
+        docker build -t gcr.io/gcp-docker-cicd/django-helloworld:$GITHUB_SHA .
+        docker push gcr.io/gcp-docker-cicd/django-helloworld:$GITHUB_SHA
 
     # Deploy to Kubernetes
     - name: Set up Kubernetes credentials
       uses: google-github-actions/setup-gcloud@v1  # Use the latest v1 version
       with:
-        project_id: wp-k8s-project
-        cluster_name: YOUR_CLUSTER_NAME
-        zone: YOUR_ZONE
+        project_id: gcp-docker-cicd
+        cluster_name: django-cluster
+        zone: us-central1-a
 
     - name: Deploy to Kubernetes
       run: |
         kubectl apply -f kubernetes/deployment.yaml
-        kubectl set image deployment/django-app django-container=gcr.io/wp-k8s-project/django-helloworld:$GITHUB_SHA
+        kubectl set image deployment/django-app django-container=gcr.io/gcp-docker-cicd/django-helloworld:$GITHUB_SHA
